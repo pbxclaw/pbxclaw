@@ -5,7 +5,7 @@
 > Every phone. Every feature. Plain English.  
 > On prem as God intended. 🫩
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-cyan.svg)](https://opensource.org/licenses/MIT)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![FreeSWITCH](https://img.shields.io/badge/Powered%20by-FreeSWITCH-blue.svg)](https://freeswitch.org)
 [![OpenClaw](https://img.shields.io/badge/Integrates%20with-OpenClaw-orange.svg)](https://openclaw.ai)
 [![Status](https://img.shields.io/badge/Status-Active%20Development-green.svg)]()
@@ -218,7 +218,7 @@ If you've been fighting the same DND bug — you're home.
 
 ## License
 
-MIT — because phone guys share. 🦞
+AGPL-3.0 — Use it freely. If you build a service with it, share your changes. Phone guys share. Corporations pay. 🦞
 
 ---
 
