@@ -15,5 +15,7 @@
   ],
   "critical": false,
   "breaking": false,
-  "notes": "Early development release. Core functionality proven. Package and installer coming in v0.2.0."
+  "notes": "Early development release. Core functionality proven. Package and installer coming in v0.2.0.",
+  "copyright": "© 2026 PBXClaw. All rights reserved.",
+  "website": "https://pbxclaw.com"
 }

@@ -225,3 +225,7 @@ MIT — because phone guys share. 🦞
 *Built by a phone guy. Powered by AI. On prem as God intended. Never sold.*
 
 **🦞 pbxclaw.com**
+
+---
+© 2026 PBXClaw. All rights reserved.
+[pbxclaw.com](https://pbxclaw.com)
