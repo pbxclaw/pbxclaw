@@ -1,0 +1,19 @@
+{
+  "version": "0.1.0",
+  "released": "2026-03-21",
+  "status": "early-development",
+  "codename": "Mickey",
+  "changelog": [
+    "Initial release",
+    "FreeSWITCH ESL DND bridge — 15-year problem solved",
+    "Smart paging — Panasonic-style private call pickup",
+    "AI agent SIP extensions — Molty gets a desk phone",
+    "Voice pipeline — agents answer calls in their own voice",
+    "PBX Mission Control — NASA-style dashboard",
+    "Auto phone detection — identify any SIP phone by IP",
+    "Per-extension AI voice personas"
+  ],
+  "critical": false,
+  "breaking": false,
+  "notes": "Early development release. Core functionality proven. Package and installer coming in v0.2.0."
+}

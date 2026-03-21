@@ -1,0 +1,49 @@
+# Environment
+.env
+.env.local
+.env.production
+*.env
+
+# Credentials
+*.pem
+*.key
+id_rsa
+id_ed25519
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+
+# Build outputs
+dist/
+build/
+*.min.js
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Docker
+docker-compose.override.yml
+
+# Secrets
+secrets/
+credentials/
+*.token
+
+# Customer data
+customer_data/
+recordings/
+voicemail/
