@@ -227,5 +227,5 @@ MIT — because phone guys share. 🦞
 **🦞 pbxclaw.com**
 
 ---
-© 2026 PBXClaw. All rights reserved.
+© 2026 PBXClaw | A. Shammah. All rights reserved.
 [pbxclaw.com](https://pbxclaw.com)
