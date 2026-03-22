@@ -172,11 +172,13 @@ Just FreeSWITCH and a beautiful dashboard.
 - [x] AI agent SIP extensions
 - [x] Voice pipeline (Molty answers calls)
 - [x] PBX Mission Control dashboard
+- [x] Auto phone detection (all brands)
+- [x] Per-extension AI voice personas
+- [x] pbxclaw.com website live
 - [ ] install.sh one-command setup
 - [ ] Docker package
 - [ ] PBX chat agent (plain English management)
 - [ ] Auto phone provisioning (all brands)
-- [ ] pbxclaw.com + sign up
 - [ ] PSTN integration
 - [ ] Call center module
 - [ ] PBXClaw Box (hardware appliance)
@@ -246,6 +248,8 @@ Questions: legal@pbxclaw.com
 
 ---
 
-© 2026 PBXClaw LLC — All Rights Reserved
+© 2026 PBXClaw — All Rights Reserved
+
+pbxclaw.com · legal@pbxclaw.com
 
 *Built by a phone guy. Powered by AI. Never sold. 🦞*

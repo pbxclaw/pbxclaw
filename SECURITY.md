@@ -21,4 +21,4 @@ We appreciate responsible disclosure and
 will credit researchers in our changelog
 with their permission.
 
-© 2026 PBXClaw LLC
+© 2026 PBXClaw

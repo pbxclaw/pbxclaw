@@ -6,12 +6,12 @@ Thank you for your interest in contributing!! 🦞
 
 By submitting a pull request or contribution to PBXClaw, you agree to the following:
 
-1. You grant PBXClaw LLC a perpetual,
+1. You grant PBXClaw a perpetual,
    worldwide, non-exclusive, royalty-free
    license to use, reproduce, modify,
    and distribute your contribution.
 
-2. You grant PBXClaw LLC the right to
+2. You grant PBXClaw the right to
    sublicense your contribution under
    any license including commercial licenses.
 
@@ -23,7 +23,7 @@ By submitting a pull request or contribution to PBXClaw, you agree to the follow
    both the open source (AGPL) and
    commercial versions of PBXClaw.
 
-This CLA is necessary to allow PBXClaw LLC to maintain the dual license model and pursue commercial licensing opportunities that fund continued development.
+This CLA is necessary to allow PBXClaw to maintain the dual license model and pursue commercial licensing opportunities that fund continued development.
 
 ## How to Contribute
 

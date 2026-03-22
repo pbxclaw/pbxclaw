@@ -2,7 +2,7 @@
 
 Panasonic-style smart paging on FreeSWITCH. One-way page converts to private two-way call on pickup.
 
-**PATENT PENDING — PBXClaw LLC 2026**
+**PATENT PENDING — PBXClaw 2026**
 
 ## Implementation
 

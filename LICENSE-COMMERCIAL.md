@@ -1,5 +1,5 @@
 PBXCLAW COMMERCIAL LICENSE
-Copyright (C) 2026 PBXClaw LLC
+Copyright (C) 2026 PBXClaw
 
 This commercial license grants you the right to use, modify, and deploy PBXClaw in proprietary/commercial applications without the copyleft requirements of the AGPL-3.0.
 
@@ -13,8 +13,8 @@ MSP:        $4,999/year (multi-client)
 Purchase: pbxclaw.com/license
 Contact:  legal@pbxclaw.com
 
-This license is not valid until payment is confirmed and a license key is issued by PBXClaw LLC.
+This license is not valid until payment is confirmed and a license key is issued by PBXClaw.
 
 Violation of this license may result in legal action under copyright law.
 
-© 2026 PBXClaw LLC
+© 2026 PBXClaw
