@@ -1,5 +1,6 @@
 {
-  "_license": "PBXClaw — Voice OS for Business | Copyright (C) 2026 PBXClaw LLC | DUAL LICENSED — See LICENSE | AGPL-3.0 for open source use | Commercial license required for proprietary/commercial use | pbxclaw.com/license | legal@pbxclaw.com",
+  "_copyright": "Copyright (C) 2026 PBXClaw LLC — Dual Licensed AGPL-3.0 + Commercial — pbxclaw.com/license",
+  "_license": "AGPL-3.0-or-later OR PBXClaw-Commercial",
   "version": "0.1.0",
   "released": "2026-03-21",
   "status": "early-development",
@@ -12,12 +13,10 @@
     "Voice pipeline — agents answer calls in their own voice",
     "PBX Mission Control — NASA-style dashboard",
     "Auto phone detection — identify any SIP phone by IP",
-    "Per-extension AI voice personas"
+    "Per-extension AI voice personas",
+    "V-TFTP — AI-native virtual TFTP server (patent pending)"
   ],
   "critical": false,
   "breaking": false,
-  "notes": "Early development release. Core functionality proven. Package and installer coming in v0.2.0.",
-  "copyright": "© 2026 PBXClaw LLC. All rights reserved.",
-  "license": "AGPL-3.0-or-later OR PBXClaw-Commercial",
-  "website": "https://pbxclaw.com"
+  "notes": "Early development release. Core functionality proven."
 }

@@ -1,33 +1,85 @@
-PBXClaw Copyright (C) 2026 PBXClaw LLC
+PBXClaw — Dual License
+Copyright (C) 2026 PBXClaw LLC
 All Rights Reserved.
 
-DUAL LICENSE NOTICE:
+DUAL LICENSE NOTICE
+═══════════════════
 
-This software is available under
-two licenses:
+This software is available under two licenses:
 
-1. GNU AFFERO GENERAL PUBLIC LICENSE v3
-   For open source projects that also
-   release their code under AGPL-3.0.
-   See LICENSE-AGPL.md
+────────────────────────────────────────
+LICENSE 1 — AGPL v3 (Open Source)
+────────────────────────────────────────
+Free for open source use under the GNU
+Affero General Public License v3.0.
 
-2. PBXCLAW COMMERCIAL LICENSE
-   For commercial, proprietary, or
-   enterprise use where you do not
-   wish to release your source code.
-   See LICENSE-COMMERCIAL.md
-   Contact: legal@pbxclaw.com
-   Purchase: pbxclaw.com/license
+You may use, modify, and distribute this
+software freely PROVIDED THAT:
+→ All modifications are released under AGPL-3.0
+→ Source code is made publicly available
+→ This license notice is preserved
+→ You are NOT using this in a commercial
+   product while keeping your code private
 
-If you are using this software in a
-commercial product or service and are
-NOT releasing your source code under
-AGPL-3.0, you MUST purchase a
-commercial license.
+Full AGPL-3.0 text: https://www.gnu.org/licenses/agpl-3.0.txt
 
-Unauthorized commercial use without a
-valid license is a violation of
-copyright law.
+SPDX-License-Identifier: AGPL-3.0-or-later
+
+────────────────────────────────────────
+LICENSE 2 — PBXClaw Commercial License
+────────────────────────────────────────
+Required for any commercial or proprietary
+use where you do NOT release your source
+code under AGPL-3.0.
+
+This includes but is not limited to:
+→ Embedding PBXClaw in a commercial product
+→ Offering PBXClaw as a hosted service
+   without releasing your modifications
+→ White labeling or OEM use
+→ Any use by a for-profit company that
+   does not release all modifications
+   under AGPL-3.0
+
+COMMERCIAL LICENSE TIERS:
+Startup     $499/year   (revenue under $100k)
+Business    $1,999/year (revenue under $1M)
+Enterprise  $9,999/year (revenue over $1M)
+OEM         $24,999/year (white label/embed)
+MSP         $4,999/year (multi-client deploy)
+
+Purchase: https://pbxclaw.com/license
+Contact:  legal@pbxclaw.com
+
+─────────────────────────────────────────
+WHICH LICENSE DO I NEED?
+─────────────────────────────────────────
+
+USE AGPL (free) if:
+✓ Personal/home/lab use
+✓ Your project is also open source
+✓ You release ALL modifications publicly
+✓ You are a hobbyist or researcher
+
+USE COMMERCIAL LICENSE if:
+✓ You are a company keeping code private
+✓ You are embedding in a commercial product
+✓ You are offering as a SaaS/hosted service
+   without releasing your code
+✓ You are white labeling or reselling
+✓ You are FreePBX, Sangoma, RingCentral,
+   Cisco, or any commercial PBX vendor
+
+IF IN DOUBT: Email legal@pbxclaw.com
+
+─────────────────────────────────────────
+ENFORCEMENT
+─────────────────────────────────────────
+Unauthorized commercial use of PBXClaw
+without a valid commercial license is a
+violation of copyright law and will be
+pursued to the full extent of the law.
 
 © 2026 PBXClaw LLC
 pbxclaw.com
+legal@pbxclaw.com

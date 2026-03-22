@@ -215,31 +215,37 @@ PRs welcome. Phone guys especially welcome. 😂
 
 If you've been fighting the same DND bug — you're home.
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details and our CLA.
+
 ---
 
 ## License
 
-PBXClaw is dual licensed.
+PBXClaw is **dual licensed**.
 
-**Open Source:** AGPL-3.0
-For projects that release their modifications under AGPL-3.0.
-See [LICENSE-AGPL.md](LICENSE-AGPL.md)
+### Open Source — AGPL v3
+Free for personal use and open source
+projects that release their code under AGPL-3.0.
 
-**Commercial:** PBXClaw Commercial License
-Required for proprietary/commercial use.
-[Purchase at pbxclaw.com/license](https://pbxclaw.com/license)
-See [LICENSE-COMMERCIAL.md](LICENSE-COMMERCIAL.md)
+### Commercial License
+Required for commercial/proprietary use.
+Companies that do not release their
+modifications under AGPL-3.0 must purchase a commercial license.
 
-If you are using PBXClaw in a commercial product or service and are NOT releasing your source code under AGPL-3.0, you MUST purchase a commercial license.
+| Tier | Price | For |
+|------|-------|-----|
+| Startup | $499/year | Revenue < $100k |
+| Business | $1,999/year | Revenue < $1M |
+| Enterprise | $9,999/year | Revenue > $1M |
+| OEM | $24,999/year | White label/embed |
+| MSP | $4,999/year | Multi-client deploy |
 
-Contact: legal@pbxclaw.com
+**[Purchase at pbxclaw.com/license](https://pbxclaw.com/license)**
+
+Questions: legal@pbxclaw.com
 
 ---
 
-*Built by a phone guy. Powered by AI. On prem as God intended. Never sold.*
+© 2026 PBXClaw LLC — All Rights Reserved
 
-**🦞 pbxclaw.com**
-
----
-© 2026 PBXClaw LLC. All rights reserved.
-[pbxclaw.com](https://pbxclaw.com)
+*Built by a phone guy. Powered by AI. Never sold. 🦞*
