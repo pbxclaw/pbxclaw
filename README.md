@@ -6,7 +6,7 @@
 > The Voice Operating System for your business. The PBX is just the beginning.
 > On prem as God intended. 🫩
 
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![License: Dual](https://img.shields.io/badge/License-AGPL_v3_|_Commercial-blue.svg)](https://github.com/pbxclaw/pbxclaw/blob/main/LICENSE)
 [![FreeSWITCH](https://img.shields.io/badge/Powered%20by-FreeSWITCH-blue.svg)](https://freeswitch.org)
 [![OpenClaw](https://img.shields.io/badge/Integrates%20with-OpenClaw-orange.svg)](https://openclaw.ai)
 [![Status](https://img.shields.io/badge/Status-Active%20Development-green.svg)]()
@@ -219,7 +219,20 @@ If you've been fighting the same DND bug — you're home.
 
 ## License
 
-AGPL-3.0 — Use it freely. If you build a service with it, share your changes. Phone guys share. Corporations pay. 🦞
+PBXClaw is dual licensed.
+
+**Open Source:** AGPL-3.0
+For projects that release their modifications under AGPL-3.0.
+See [LICENSE-AGPL.md](LICENSE-AGPL.md)
+
+**Commercial:** PBXClaw Commercial License
+Required for proprietary/commercial use.
+[Purchase at pbxclaw.com/license](https://pbxclaw.com/license)
+See [LICENSE-COMMERCIAL.md](LICENSE-COMMERCIAL.md)
+
+If you are using PBXClaw in a commercial product or service and are NOT releasing your source code under AGPL-3.0, you MUST purchase a commercial license.
+
+Contact: legal@pbxclaw.com
 
 ---
 
@@ -228,5 +241,5 @@ AGPL-3.0 — Use it freely. If you build a service with it, share your changes. 
 **🦞 pbxclaw.com**
 
 ---
-© 2026 PBXClaw | A. Shammah. All rights reserved.
+© 2026 PBXClaw LLC. All rights reserved.
 [pbxclaw.com](https://pbxclaw.com)

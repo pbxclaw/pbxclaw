@@ -1,6 +1,33 @@
-SPDX-License-Identifier: AGPL-3.0-or-later
+PBXClaw Copyright (C) 2026 PBXClaw LLC
+All Rights Reserved.
 
-Copyright (c) 2026 PBXClaw | A. Shammah
-https://pbxclaw.com
+DUAL LICENSE NOTICE:
 
-See https://www.gnu.org/licenses/agpl-3.0.html for full license text
+This software is available under
+two licenses:
+
+1. GNU AFFERO GENERAL PUBLIC LICENSE v3
+   For open source projects that also
+   release their code under AGPL-3.0.
+   See LICENSE-AGPL.md
+
+2. PBXCLAW COMMERCIAL LICENSE
+   For commercial, proprietary, or
+   enterprise use where you do not
+   wish to release your source code.
+   See LICENSE-COMMERCIAL.md
+   Contact: legal@pbxclaw.com
+   Purchase: pbxclaw.com/license
+
+If you are using this software in a
+commercial product or service and are
+NOT releasing your source code under
+AGPL-3.0, you MUST purchase a
+commercial license.
+
+Unauthorized commercial use without a
+valid license is a violation of
+copyright law.
+
+© 2026 PBXClaw LLC
+pbxclaw.com
