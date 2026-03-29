@@ -1,0 +1,9 @@
+<configuration name="switch.conf" description="Core Configuration">
+  <settings>
+    <param name="colorize-console" value="true"/>
+    <param name="max-sessions" value="100"/>
+    <param name="sessions-per-second" value="30"/>
+    <param name="rtp-start-port" value="16384"/>
+    <param name="rtp-end-port" value="32768"/>
+  </settings>
+</configuration>

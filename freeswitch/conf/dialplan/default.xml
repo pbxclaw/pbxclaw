@@ -1,0 +1,68 @@
+<include>
+  <context name="default">
+
+    <!--
+        PBXClaw Dialplan
+        ================
+        100-199: Physical phones
+        900-909: AI agents (ext 900 = Molty)
+        *78/*79: DND on/off
+        *724:    Page all
+    -->
+
+    <!-- Internal calls between all extensions (100-199, 900-909) -->
+    <extension name="local_extensions">
+      <condition field="destination_number" expression="^(1[0-9]{2}|90[0-9])$">
+        <action application="set" data="hangup_after_bridge=true"/>
+        <action application="set" data="call_timeout=30"/>
+        <action application="bridge" data="user/$1@$${domain}"/>
+      </condition>
+    </extension>
+
+    <!-- DND Toggle: *78 = DND On, *79 = DND Off -->
+    <extension name="dnd_on">
+      <condition field="destination_number" expression="^\*78$">
+        <action application="answer"/>
+        <action application="sleep" data="500"/>
+        <action application="db" data="insert/dnd/${caller_id_number}/true"/>
+        <action application="playback" data="ivr/ivr-enabled.wav"/>
+        <action application="hangup"/>
+      </condition>
+    </extension>
+
+    <extension name="dnd_off">
+      <condition field="destination_number" expression="^\*79$">
+        <action application="answer"/>
+        <action application="sleep" data="500"/>
+        <action application="db" data="delete/dnd/${caller_id_number}"/>
+        <action application="playback" data="ivr/ivr-disabled.wav"/>
+        <action application="hangup"/>
+      </condition>
+    </extension>
+
+    <!-- Page All: *724 -->
+    <extension name="page_all">
+      <condition field="destination_number" expression="^\*724$">
+        <action application="set" data="sip_auto_answer=true"/>
+        <action application="bridge" data="{ignore_early_media=true}user/101@$${domain},user/102@$${domain},user/103@$${domain},user/104@$${domain},user/105@$${domain}"/>
+      </condition>
+    </extension>
+
+    <!-- Voicemail: *97 = check own voicemail -->
+    <extension name="voicemail_check">
+      <condition field="destination_number" expression="^\*97$">
+        <action application="answer"/>
+        <action application="voicemail" data="check default $${domain} ${caller_id_number}"/>
+      </condition>
+    </extension>
+
+    <!-- Echo test: *9196 -->
+    <extension name="echo">
+      <condition field="destination_number" expression="^\*9196$">
+        <action application="answer"/>
+        <action application="echo"/>
+      </condition>
+    </extension>
+
+  </context>
+</include>

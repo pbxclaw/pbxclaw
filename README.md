@@ -13,6 +13,28 @@
 
 ---
 
+## Quick Start (Alpha)
+
+```bash
+git clone https://github.com/pbxclaw/pbxclaw.git
+cd pbxclaw
+./install.sh
+```
+
+**What you get:**
+- FreeSWITCH installed and configured (no SignalWire token needed)
+- Dashboard at [http://localhost:4444](http://localhost:4444) with AI chat admin
+- Extension 900 — Molty, your AI chief of staff, answers calls
+- BYO SIP trunk support — paste your credentials, start making calls
+
+**What you need:**
+- A PBXClaw API key → [pbxclaw.com/signup](https://pbxclaw.com/signup)
+- An Anthropic API key → [console.anthropic.com](https://console.anthropic.com)
+
+See [INSTALL.md](INSTALL.md) for full instructions. See [ALPHA.md](ALPHA.md) for what works and what doesn't.
+
+---
+
 ## The Story
 
 In 2023 I asked an Asterisk developer about fixing DND BLF sync for Cisco 3PCC phones.

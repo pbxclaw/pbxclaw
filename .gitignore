@@ -47,3 +47,15 @@ credentials/
 customer_data/
 recordings/
 voicemail/
+
+# SIP bridge config (contains passwords)
+sip-voice/agent_sip_config.json
+
+# FreeSWITCH build artifacts
+freeswitch/build/
+
+# PID files
+*.pid
+
+# Audit logs
+admin-audit.log

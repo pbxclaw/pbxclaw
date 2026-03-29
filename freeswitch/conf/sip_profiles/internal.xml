@@ -1,0 +1,33 @@
+<profile name="internal">
+  <settings>
+    <!-- SIP signaling -->
+    <param name="sip-ip" value="$${local_ip_v4}"/>
+    <param name="sip-port" value="5060"/>
+    <param name="rtp-ip" value="$${local_ip_v4}"/>
+
+    <!-- Authentication -->
+    <param name="apply-register-acl" value="localnet.auto"/>
+    <param name="challenge-realm" value="auto_from"/>
+
+    <!-- Call tracking (required for BLF/presence) -->
+    <param name="track-calls" value="true"/>
+    <param name="manage-presence" value="true"/>
+
+    <!-- Codecs -->
+    <param name="inbound-codec-prefs" value="$${global_codec_prefs}"/>
+    <param name="outbound-codec-prefs" value="$${outbound_codec_prefs}"/>
+    <param name="inbound-codec-negotiation" value="generous"/>
+
+    <!-- NAT handling -->
+    <param name="ext-rtp-ip" value="$${external_rtp_ip}"/>
+    <param name="ext-sip-ip" value="$${external_sip_ip}"/>
+
+    <!-- Misc -->
+    <param name="context" value="default"/>
+    <param name="dialplan" value="XML"/>
+    <param name="nonce-ttl" value="60"/>
+    <param name="auth-calls" value="true"/>
+    <param name="auth-all-packets" value="false"/>
+    <param name="log-auth-failures" value="true"/>
+  </settings>
+</profile>

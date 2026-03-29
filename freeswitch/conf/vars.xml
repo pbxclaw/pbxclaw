@@ -1,0 +1,40 @@
+<!--
+    PBXClaw — FreeSWITCH Variables
+    Codecs forced to PCMU/PCMA for maximum phone compatibility.
+-->
+
+<!-- Codecs — PCMU/PCMA only (proven with Cisco 8865, Polycom VVX, Yealink) -->
+<X-PRE-PROCESS cmd="set" data="global_codec_prefs=PCMU,PCMA"/>
+<X-PRE-PROCESS cmd="set" data="outbound_codec_prefs=PCMU,PCMA"/>
+
+<!-- Network — auto-detect local IP -->
+<X-PRE-PROCESS cmd="set" data="external_sip_ip=$${local_ip_v4}"/>
+<X-PRE-PROCESS cmd="set" data="external_rtp_ip=$${local_ip_v4}"/>
+
+<!-- Defaults -->
+<X-PRE-PROCESS cmd="set" data="default_language=en"/>
+<X-PRE-PROCESS cmd="set" data="default_dialect=us"/>
+<X-PRE-PROCESS cmd="set" data="default_voice=callie"/>
+<X-PRE-PROCESS cmd="set" data="default_country=US"/>
+<X-PRE-PROCESS cmd="set" data="default_countrycode=1"/>
+<X-PRE-PROCESS cmd="set" data="record_ext=wav"/>
+
+<!-- Logging -->
+<X-PRE-PROCESS cmd="set" data="console_loglevel=info"/>
+<X-PRE-PROCESS cmd="set" data="call_debug=false"/>
+
+<!-- SIP -->
+<X-PRE-PROCESS cmd="set" data="sip_tls_version=tlsv1.2"/>
+<X-PRE-PROCESS cmd="set" data="unroll_loops=true"/>
+
+<!-- Security -->
+<X-PRE-PROCESS cmd="set" data="disable_system_app_commands=true"/>
+<X-PRE-PROCESS cmd="set" data="disable_system_api_commands=true"/>
+
+<!-- Sound -->
+<X-PRE-PROCESS cmd="set" data="sound_prefix=$${sounds_dir}/en/us/callie"/>
+<X-PRE-PROCESS cmd="set" data="hold_music=local_stream://default"/>
+
+<!-- US ring/busy tones -->
+<X-PRE-PROCESS cmd="set" data="us-ring=%(2000,4000,440,480)"/>
+<X-PRE-PROCESS cmd="set" data="busy-us-tone=%(500,500,480,620)"/>

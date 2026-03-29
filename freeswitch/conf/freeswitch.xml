@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+    PBXClaw — Minimal FreeSWITCH Configuration
+    This is the alpha config. It provides:
+    - SIP registration (internal profile, port 5060)
+    - ESL (Event Socket Layer, port 8021)
+    - Dialplan for extensions 100-199 (phones) and 900-909 (AI agents)
+    - PCMU/PCMA codecs (proven with Cisco, Polycom, Yealink)
+-->
+<document type="freeswitch/xml">
+
+  <X-PRE-PROCESS cmd="include" data="vars.xml"/>
+
+  <section name="configuration" description="Various Configuration">
+    <X-PRE-PROCESS cmd="include" data="autoload_configs/*.xml"/>
+  </section>
+
+  <section name="dialplan" description="Regex/XML Dialplan">
+    <X-PRE-PROCESS cmd="include" data="dialplan/*.xml"/>
+  </section>
+
+  <section name="directory" description="User Directory">
+    <X-PRE-PROCESS cmd="include" data="directory/*.xml"/>
+  </section>
+
+</document>
