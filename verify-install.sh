@@ -106,7 +106,7 @@ check "PBXCLAW_API_KEY is set" test -n "${PBXCLAW_API_KEY:-}"
 if [ -n "${PBXCLAW_API_KEY:-}" ]; then
     warn_check "API key validated with pbxclaw.com" bash -c "
         HTTP_CODE=\$(curl -s -o /dev/null -w '%{http_code}' \
-            -H 'Authorization: Bearer $PBXCLAW_API_KEY' \
+            -H 'x-api-key: $PBXCLAW_API_KEY' \
             'https://pbxclaw.com/api/auth/verify-key' 2>/dev/null)
         [ \"\$HTTP_CODE\" = '200' ]
     "

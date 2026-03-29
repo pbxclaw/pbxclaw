@@ -477,7 +477,7 @@ fi
 if [ -n "${PBXCLAW_API_KEY:-}" ]; then
     info "Validating PBXClaw API key..."
     HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
-        -H "Authorization: Bearer $PBXCLAW_API_KEY" \
+        -H "x-api-key: $PBXCLAW_API_KEY" \
         "https://pbxclaw.com/api/auth/verify-key" 2>/dev/null || echo "000")
     if [ "$HTTP_CODE" = "200" ]; then
         ok "PBXClaw API key validated"

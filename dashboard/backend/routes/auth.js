@@ -22,7 +22,7 @@ router.get('/verify', async (req, res) => {
   try {
     const response = await axios.get('https://pbxclaw.com/api/auth/verify-key', {
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        'x-api-key': apiKey,
         'Content-Type': 'application/json'
       },
       timeout: 10000
