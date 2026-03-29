@@ -27,6 +27,52 @@ step()  { echo -e "\n${BOLD}═══ $1 ═══${NC}"; }
 OS="$(uname -s)"
 ARCH="$(uname -m)"
 
+# Parse flags
+REMOTE_FS_HOST=""
+EXISTING_FS=false
+SKIP_FS_INSTALL=false
+FS_MODE="fresh"  # fresh | remote | existing
+
+for arg in "$@"; do
+    case "$arg" in
+        --remote-fs=*)
+            REMOTE_FS_HOST="${arg#*=}"
+            SKIP_FS_INSTALL=true
+            FS_MODE="remote"
+            ;;
+        --remote-fs)
+            SKIP_FS_INSTALL=true
+            FS_MODE="remote"
+            ;;
+        --existing-fs)
+            EXISTING_FS=true
+            SKIP_FS_INSTALL=true
+            FS_MODE="existing"
+            ;;
+        --help|-h)
+            echo "Usage: ./install.sh [OPTIONS]"
+            echo ""
+            echo "Options:"
+            echo "  (default)             Full install — FreeSWITCH + dashboard + everything"
+            echo "  --existing-fs         Use your existing local FreeSWITCH (additive config)"
+            echo "  --remote-fs           Skip local FreeSWITCH (use FREESWITCH_HOST from .env)"
+            echo "  --remote-fs=HOST      Skip local FreeSWITCH, use HOST"
+            echo "  -h, --help            Show this help"
+            echo ""
+            echo "Modes:"
+            echo "  Fresh (default)   New PBX — installs FreeSWITCH + full config"
+            echo "  Existing FS       Phone guys — layers PBXClaw onto your running FreeSWITCH"
+            echo "  Remote FS         FreeSWITCH on another server — installs everything else locally"
+            echo ""
+            echo "Examples:"
+            echo "  ./install.sh                        # Fresh install"
+            echo "  ./install.sh --existing-fs          # Add PBXClaw to existing FreeSWITCH"
+            echo "  ./install.sh --remote-fs=10.0.0.50  # FreeSWITCH on another box"
+            exit 0
+            ;;
+    esac
+done
+
 echo ""
 echo -e "${CYAN}"
 echo "  ╔═══════════════════════════════════════╗"
@@ -40,6 +86,9 @@ echo "  ╚═══════════════════════
 echo -e "${NC}"
 info "Platform: $OS ($ARCH)"
 info "Install dir: $PBXCLAW_HOME"
+if [ "$FS_MODE" != "fresh" ]; then
+    info "Mode: $FS_MODE FreeSWITCH"
+fi
 echo ""
 
 # ═══════════════════════════════════════════
@@ -113,17 +162,250 @@ fi
 ok "All preflight checks passed"
 
 # ═══════════════════════════════════════════
-# Phase 2: Install FreeSWITCH
+# Phase 2: FreeSWITCH
 # ═══════════════════════════════════════════
 step "Phase 2: FreeSWITCH"
 
-# Check if already running
-if nc -z 127.0.0.1 8021 2>/dev/null; then
-    ok "FreeSWITCH already running (ESL port 8021 responding)"
-else
-    info "Installing FreeSWITCH..."
-    bash "$PBXCLAW_HOME/freeswitch/install-freeswitch.sh"
+# Auto-detect remote FS from .env if no flag was given
+if [ "$FS_MODE" = "fresh" ] && [ -f "$PBXCLAW_HOME/.env" ]; then
+    ENV_FS_HOST=$(grep -E "^FREESWITCH_HOST=" "$PBXCLAW_HOME/.env" 2>/dev/null | cut -d= -f2 | tr -d '"' | tr -d "'" || true)
+    if [ -n "$ENV_FS_HOST" ] && [ "$ENV_FS_HOST" != "127.0.0.1" ] && [ "$ENV_FS_HOST" != "localhost" ]; then
+        FS_MODE="remote"
+        SKIP_FS_INSTALL=true
+        REMOTE_FS_HOST="$ENV_FS_HOST"
+        info "FREESWITCH_HOST=$ENV_FS_HOST in .env — using remote mode"
+    fi
 fi
+
+# ─── Detect existing local FreeSWITCH ───
+detect_fs_config_dir() {
+    # Check common FreeSWITCH config locations
+    for dir in /usr/local/freeswitch/conf /etc/freeswitch /opt/freeswitch/conf; do
+        if [ -d "$dir" ] && [ -f "$dir/freeswitch.xml" ]; then
+            echo "$dir"
+            return 0
+        fi
+    done
+    # macOS Homebrew
+    if [ "$OS" = "Darwin" ]; then
+        local brew_prefix
+        brew_prefix="$(brew --prefix 2>/dev/null || echo /opt/homebrew)"
+        for dir in "$brew_prefix/etc/freeswitch" "$brew_prefix/opt/freeswitch/etc/freeswitch"; do
+            if [ -d "$dir" ] && [ -f "$dir/freeswitch.xml" ]; then
+                echo "$dir"
+                return 0
+            fi
+        done
+    fi
+    return 1
+}
+
+case "$FS_MODE" in
+    # ─── FRESH: Install FreeSWITCH + full PBXClaw config ───
+    fresh)
+        if nc -z 127.0.0.1 8021 2>/dev/null; then
+            ok "FreeSWITCH already running (ESL port 8021 responding)"
+        else
+            info "Installing FreeSWITCH..."
+            bash "$PBXCLAW_HOME/freeswitch/install-freeswitch.sh"
+        fi
+        ;;
+
+    # ─── REMOTE: FS on another server, skip local install ───
+    remote)
+        FS_TARGET="${REMOTE_FS_HOST:-remote}"
+        ok "Using remote FreeSWITCH at $FS_TARGET (skipping local install)"
+        info "PBXClaw config files: $PBXCLAW_HOME/freeswitch/conf/"
+        info "Copy to remote: scp -r freeswitch/conf/ user@$FS_TARGET:/usr/local/freeswitch/conf/"
+
+        # Write the remote host to .env if provided via flag
+        if [ -n "$REMOTE_FS_HOST" ] && [ -f "$PBXCLAW_HOME/.env" ]; then
+            if grep -q "^FREESWITCH_HOST=" "$PBXCLAW_HOME/.env"; then
+                sed -i.bak "s|^FREESWITCH_HOST=.*|FREESWITCH_HOST=$REMOTE_FS_HOST|" "$PBXCLAW_HOME/.env"
+                rm -f "$PBXCLAW_HOME/.env.bak"
+            else
+                echo "FREESWITCH_HOST=$REMOTE_FS_HOST" >> "$PBXCLAW_HOME/.env"
+            fi
+            ok "FREESWITCH_HOST=$REMOTE_FS_HOST written to .env"
+        fi
+        ;;
+
+    # ─── EXISTING: Layer PBXClaw onto running FreeSWITCH ───
+    existing)
+        info "Existing FreeSWITCH mode — additive config only"
+
+        # Find their FS config
+        FS_CONF_DIR=""
+        if FS_CONF_DIR=$(detect_fs_config_dir); then
+            ok "Found FreeSWITCH config at $FS_CONF_DIR"
+        else
+            fail "Could not find FreeSWITCH config directory"
+            info "Checked: /usr/local/freeswitch/conf, /etc/freeswitch, Homebrew paths"
+            info "Set FS_CONF_DIR=/path/to/your/conf and re-run, or install with default mode"
+            exit 1
+        fi
+
+        # Verify FS is actually running
+        if nc -z 127.0.0.1 8021 2>/dev/null; then
+            ok "FreeSWITCH ESL responding on port 8021"
+        else
+            warn "FreeSWITCH ESL not responding — is it running?"
+            info "PBXClaw needs ESL on port 8021. Continuing anyway..."
+        fi
+
+        # Backup existing config
+        BACKUP_DIR="$FS_CONF_DIR/pre-pbxclaw-backup-$(date +%Y%m%d-%H%M%S)"
+        info "Backing up existing config to $BACKUP_DIR"
+        mkdir -p "$BACKUP_DIR"
+        # Only backup files we might touch
+        for f in dialplan/pbxclaw.xml directory/pbxclaw_agents.xml autoload_configs/event_socket.conf.xml; do
+            src="$FS_CONF_DIR/$f"
+            if [ -f "$src" ]; then
+                mkdir -p "$BACKUP_DIR/$(dirname "$f")"
+                cp "$src" "$BACKUP_DIR/$f"
+            fi
+        done
+        ok "Backup created"
+
+        # ── Add PBXClaw dialplan context (additive — new file, not replacing) ──
+        DIALPLAN_DIR="$FS_CONF_DIR/dialplan"
+        if [ -d "$DIALPLAN_DIR" ]; then
+            PBXCLAW_DP="$DIALPLAN_DIR/pbxclaw.xml"
+            if [ -f "$PBXCLAW_DP" ]; then
+                ok "PBXClaw dialplan already exists at $PBXCLAW_DP"
+            else
+                info "Adding PBXClaw dialplan (extensions 900-909, paging, DND codes)..."
+                cat > "$PBXCLAW_DP" << 'DPXML'
+<!-- PBXClaw — AI agent extensions and features -->
+<!-- This file is ADDITIVE — it does not replace your existing dialplan -->
+<include>
+  <context name="default">
+
+    <!-- AI Agent Extensions (900-909) -->
+    <extension name="pbxclaw-ai-agents">
+      <condition field="destination_number" expression="^(90[0-9])$">
+        <action application="set" data="call_timeout=30"/>
+        <action application="bridge" data="user/$1@${domain_name}"/>
+      </condition>
+    </extension>
+
+    <!-- DND Toggle (*78 on / *79 off) -->
+    <extension name="pbxclaw-dnd-on">
+      <condition field="destination_number" expression="^\*78$">
+        <action application="execute_extension" data="dnd_on"/>
+        <action application="set" data="dnd=true"/>
+        <action application="db" data="insert/dnd/${caller_id_number}/true"/>
+        <action application="playback" data="ivr/ivr-enabled.wav"/>
+        <action application="hangup"/>
+      </condition>
+    </extension>
+    <extension name="pbxclaw-dnd-off">
+      <condition field="destination_number" expression="^\*79$">
+        <action application="set" data="dnd=false"/>
+        <action application="db" data="delete/dnd/${caller_id_number}"/>
+        <action application="playback" data="ivr/ivr-disabled.wav"/>
+        <action application="hangup"/>
+      </condition>
+    </extension>
+
+    <!-- Page All (*724) -->
+    <extension name="pbxclaw-page-all">
+      <condition field="destination_number" expression="^\*724$">
+        <action application="set" data="sip_auto_answer=true"/>
+        <action application="set" data="api_result=${group_call(default@${domain_name}+A)}"/>
+      </condition>
+    </extension>
+
+    <!-- Voicemail (*97) -->
+    <extension name="pbxclaw-voicemail">
+      <condition field="destination_number" expression="^\*97$">
+        <action application="answer"/>
+        <action application="voicemail" data="check default ${domain_name} ${caller_id_number}"/>
+      </condition>
+    </extension>
+
+  </context>
+</include>
+DPXML
+                ok "PBXClaw dialplan added at $PBXCLAW_DP"
+            fi
+        else
+            warn "No dialplan directory found at $DIALPLAN_DIR"
+        fi
+
+        # ── Add ext 900 (Molty) to directory (additive — new file) ──
+        DIRECTORY_DIR="$FS_CONF_DIR/directory"
+        if [ -d "$DIRECTORY_DIR" ]; then
+            PBXCLAW_DIR_FILE="$DIRECTORY_DIR/pbxclaw_agents.xml"
+            if [ -f "$PBXCLAW_DIR_FILE" ]; then
+                ok "PBXClaw agent directory already exists"
+            else
+                info "Adding ext 900 (Molty) to directory..."
+                cat > "$PBXCLAW_DIR_FILE" << 'DIRXML'
+<!-- PBXClaw AI Agent Extensions -->
+<!-- ADDITIVE — does not modify your existing user directory -->
+<include>
+  <!-- Molty — AI Chief of Staff -->
+  <user id="900">
+    <params>
+      <param name="password" value="CHANGE_ME"/>
+      <param name="vm-password" value="900"/>
+    </params>
+    <variables>
+      <variable name="toll_allow" value="domestic,international,local"/>
+      <variable name="effective_caller_id_name" value="Molty"/>
+      <variable name="effective_caller_id_number" value="900"/>
+      <variable name="user_context" value="default"/>
+      <variable name="callgroup" value="ai-agents"/>
+    </variables>
+  </user>
+</include>
+DIRXML
+                ok "Ext 900 (Molty) added to directory"
+                warn "Edit $PBXCLAW_DIR_FILE and change CHANGE_ME to a real password"
+            fi
+        else
+            warn "No directory folder found at $DIRECTORY_DIR"
+        fi
+
+        # ── Ensure ESL is enabled ──
+        ESL_CONF="$FS_CONF_DIR/autoload_configs/event_socket.conf.xml"
+        if [ -f "$ESL_CONF" ]; then
+            ok "ESL config exists at $ESL_CONF"
+            # Check if it's listening on 8021
+            if grep -q "8021" "$ESL_CONF" 2>/dev/null; then
+                ok "ESL configured on port 8021"
+            else
+                warn "ESL config found but may not be on port 8021 — PBXClaw needs ESL on 8021"
+                info "Check: $ESL_CONF"
+            fi
+        else
+            info "ESL config not found — creating..."
+            mkdir -p "$FS_CONF_DIR/autoload_configs"
+            cat > "$ESL_CONF" << 'ESLXML'
+<configuration name="event_socket.conf" description="Socket Client">
+  <settings>
+    <param name="nat-map" value="false"/>
+    <param name="listen-ip" value="127.0.0.1"/>
+    <param name="listen-port" value="8021"/>
+    <param name="password" value="ClueCon"/>
+  </settings>
+</configuration>
+ESLXML
+            ok "ESL config created (port 8021, localhost only)"
+            warn "Restart FreeSWITCH to load ESL: fs_cli -x 'reloadxml' or systemctl restart freeswitch"
+        fi
+
+        # ── Summary ──
+        echo ""
+        info "PBXClaw layered onto existing FreeSWITCH:"
+        info "  Dialplan: $DIALPLAN_DIR/pbxclaw.xml (new file — your dialplan untouched)"
+        info "  Directory: $DIRECTORY_DIR/pbxclaw_agents.xml (new file — your users untouched)"
+        info "  ESL: $ESL_CONF (verified)"
+        info ""
+        info "Run 'fs_cli -x reloadxml' to pick up changes without restarting."
+        ;;
+esac
 
 # ═══════════════════════════════════════════
 # Phase 3: Environment Setup
@@ -280,6 +562,11 @@ fi
 # ═══════════════════════════════════════════
 step "Phase 7: Connectivity"
 
+# Re-source .env in case we wrote FREESWITCH_HOST during Phase 2
+set -a
+source "$PBXCLAW_HOME/.env" 2>/dev/null || true
+set +a
+
 FS_HOST="${FREESWITCH_HOST:-127.0.0.1}"
 ESL_PORT="${FREESWITCH_ESL_PORT:-8021}"
 
@@ -317,12 +604,25 @@ echo -e "  ${BOLD}Python venv:${NC}  $PBXCLAW_HOME/.venv"
 echo ""
 echo -e "  ${BOLD}Next steps:${NC}"
 echo ""
-echo "  1. Start FreeSWITCH:"
-if [ "$OS" = "Darwin" ]; then
-    echo "     brew services start freeswitch"
-else
-    echo "     sudo systemctl start freeswitch"
-fi
+case "$FS_MODE" in
+    fresh)
+        echo "  1. Start FreeSWITCH:"
+        if [ "$OS" = "Darwin" ]; then
+            echo "     brew services start freeswitch"
+        else
+            echo "     sudo systemctl start freeswitch"
+        fi
+        ;;
+    remote)
+        echo "  1. Ensure FreeSWITCH is running on $FS_HOST"
+        echo "     Copy config: scp -r $PBXCLAW_HOME/freeswitch/conf/ user@$FS_HOST:/usr/local/freeswitch/conf/"
+        echo "     Reload: ssh user@$FS_HOST 'fs_cli -x reloadxml'"
+        ;;
+    existing)
+        echo "  1. Reload FreeSWITCH config:"
+        echo "     fs_cli -x reloadxml"
+        ;;
+esac
 echo ""
 echo "  2. Start the dashboard:"
 echo "     cd $PBXCLAW_HOME/dashboard/backend && node server.js"

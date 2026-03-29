@@ -27,6 +27,35 @@ The installer will:
 6. Build the dashboard
 7. Run connectivity checks
 
+### Install Modes
+
+PBXClaw supports three install modes — pick your flavor:
+
+**Fresh (default)** — New PBX, installs everything:
+```bash
+./install.sh
+```
+
+**Existing FreeSWITCH** — You already have FS running (FusionPBX, FreePBX, bare FS):
+```bash
+./install.sh --existing-fs
+```
+This layers PBXClaw onto your running FreeSWITCH without touching your existing extensions, dialplan, or trunks. It adds:
+- `pbxclaw.xml` to your dialplan (AI agent routing, DND codes, paging)
+- `pbxclaw_agents.xml` to your directory (ext 900 Molty)
+- Verifies ESL is enabled on port 8021
+
+Your existing config stays exactly as-is. A backup is created before any changes.
+
+**Remote FreeSWITCH** — FS on a separate server:
+```bash
+./install.sh --remote-fs=10.0.0.50
+```
+Installs dashboard, Python venv, and bridges locally. Skips FreeSWITCH install. Copy config to your FS server:
+```bash
+scp -r freeswitch/conf/ user@your-fs-server:/usr/local/freeswitch/conf/
+```
+
 ## After Installation
 
 ### 1. Start FreeSWITCH

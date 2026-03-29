@@ -65,11 +65,22 @@ echo -e "${CYAN}═════════════════════�
 echo ""
 
 # ─── FreeSWITCH ─────────────────────────
-echo -e "${BOLD}FreeSWITCH${NC}"
+IS_REMOTE_FS=false
+if [ "$FS_HOST" != "127.0.0.1" ] && [ "$FS_HOST" != "localhost" ]; then
+    IS_REMOTE_FS=true
+fi
 
-check "FreeSWITCH binary exists" bash -c "command -v freeswitch || [ -x /usr/local/freeswitch/bin/freeswitch ] || brew list freeswitch"
-check "ESL port $ESL_PORT responding" nc -z "$FS_HOST" "$ESL_PORT"
-check "SIP port 5060 responding" nc -z "$FS_HOST" 5060
+if [ "$IS_REMOTE_FS" = true ]; then
+    echo -e "${BOLD}FreeSWITCH ${DIM}(remote: $FS_HOST)${NC}"
+else
+    echo -e "${BOLD}FreeSWITCH ${DIM}(local)${NC}"
+fi
+
+if [ "$IS_REMOTE_FS" = false ]; then
+    check "FreeSWITCH binary exists" bash -c "command -v freeswitch || [ -x /usr/local/freeswitch/bin/freeswitch ] || brew list freeswitch"
+fi
+check "ESL port $ESL_PORT responding ($FS_HOST)" nc -z "$FS_HOST" "$ESL_PORT"
+check "SIP port 5060 responding ($FS_HOST)" nc -z "$FS_HOST" 5060
 
 echo ""
 
