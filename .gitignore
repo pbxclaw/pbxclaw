@@ -1,0 +1,38 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment (never commit real secrets)
+.env
+.env.*
+!.env.example
+
+# Source code / patches (this is a docs-only repo)
+*.js
+*.py
+*.ts
+*.patch
+*.diff
+*.so
+*.dylib
+*.dll
+*.exe
+
+# Build artifacts
+node_modules/
+dist/
+build/
+*.tar.gz
+*.zip
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# IDE
+.vscode/
+.idea/
